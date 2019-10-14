@@ -14,3 +14,17 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Auth::routes();
+
+// Route::get('/home', 'HomeController@index')->name('home');
+
+Route::namespace('Admin')->prefix('admin')->group(function () {
+    Route::get('/login','LoginController@showFormLogin')->name('backoffice.login');
+    Route::post('/login','LoginController@login')->name('backoffice.login.procces');
+    Route::get('/logout','LoginController@logout')->name('backoffice.logout');
+
+    Route::middleware('auth')->group(function(){
+        Route::get('/dashboard','DashboardController@index')->name('backoffice.dashboard');
+    });
+});
